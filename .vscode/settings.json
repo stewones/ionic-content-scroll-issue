@@ -1,0 +1,19 @@
+{
+  "typescript.tsserver.log": "off",
+  "task.allowAutomaticTasks": "off",
+  "tsImportSorter.configuration.formatExports": true,
+  "tsImportSorter.configuration.autoFormat": "onSave",
+  "tsImportSorter.configuration.wrappingStyle": "prettier",
+  "tsImportSorter.configuration.exclude": [],
+  "tsImportSorter.configuration.keepUnused": [],
+  "tsImportSorter.configuration.groupRules": [
+    {},
+    "^node:",
+    "^@angular",
+    "^@borda",
+    "^@/",
+    "^[@]",
+    "^[.]"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
+}
