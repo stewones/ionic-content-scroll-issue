@@ -3,7 +3,7 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 
 // rxjs subject
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 import {
   ChangeDetectorRef,
@@ -23,7 +23,9 @@ import {
 
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 
-export const streamer$ = new BehaviorSubject<number>(420);
+const initialValue = 420;
+
+export const streamer$ = new BehaviorSubject<number>(initialValue);
 
 @Component({
   selector: 'app-tab1',
@@ -44,30 +46,34 @@ export class Tab1Page {
 
   @ViewChild('content') content!: IonContent;
 
-  value = signal(0);
+  value = signal(initialValue);
 
   // a rxjs stream
-  stream$ = streamer$.subscribe({
-    next: (value) => {
-      this.value.set(value);
-      this.content.scrollToBottom();
-    },
-  });
+  stream$: Subscription = this.subscribe();
 
   /**
    * if you remove the initialization of stream$ above and uncomment the following
    * it will fix the issue in the browser but test will still fail
    */
   ngAfterViewInit() {
-    // this.stream$ = streamer$.subscribe({
-    //   next: (value) => {
-    //     this.value.set(value);
-    //     this.content.scrollToBottom();
-    //   },
-    // });
+    // this.stream$ = this.subscribe();
+  }
+
+  subscribe() {
+    return streamer$.subscribe({
+      next: (value) => {
+        try {
+          this.value.set(value);
+          this.content.scrollToBottom();
+        } catch (err) {
+          console.error(err);
+        }
+      },
+    });
   }
 
   increment() {
+    console.log('hell');
     streamer$.next(this.value() + 1);
   }
 }

@@ -22,7 +22,7 @@ describe('Thread Page', () => {
 
     const contentSpy = jest.spyOn(instance.content, 'scrollToBottom');
 
-    expect(contentSpy).toHaveBeenCalled();
     expect(instance.value()).toBe(421);
+    expect(contentSpy).toHaveBeenCalled();
   });
 });
